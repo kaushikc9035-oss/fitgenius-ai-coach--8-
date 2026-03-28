@@ -1,0 +1,69 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile information and fitness settings",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "The unique user ID from Firebase Auth" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["Patient", "Doctor"] },
+        "name": { "type": "string" },
+        "age": { "type": "integer" },
+        "height": { "type": "number" },
+        "weight": { "type": "number" },
+        "gender": { "type": "string", "enum": ["Male", "Female", "Other"] },
+        "activityLevel": { "type": "string" },
+        "fitnessGoal": { "type": "string" },
+        "foodPreference": { "type": "string" },
+        "healthIssues": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "healthLogs": { "type": "array" },
+        "weightLogs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "date": { "type": "string", "format": "date" },
+              "weight": { "type": "number" }
+            }
+          }
+        },
+        "restingHeartRate": { "type": "integer" },
+        "dailySleep": { "type": "number" },
+        "dailySteps": { "type": "integer" },
+        "systolicBP": { "type": "integer" },
+        "smokingStatus": { "type": "string" },
+        "dietQuality": { "type": "string" },
+        "stressLevel": { "type": "string" },
+        "familyId": { "type": "string" },
+        "familyRelationship": { "type": "string" }
+      },
+      "required": ["id", "email", "role", "name", "age", "height", "weight", "gender", "activityLevel", "fitnessGoal", "foodPreference", "createdAt"]
+    },
+    "GeneratedPlan": {
+      "title": "GeneratedPlan",
+      "description": "The AI-generated meal and workout plan for a user",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "dietPlan": { "type": "object" },
+        "workoutPlan": { "type": "object" },
+        "summary": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "longevityAnalysis": { "type": "object" }
+      },
+      "required": ["userId", "dietPlan", "workoutPlan", "summary", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile documents"
+    },
+    "/plans/{userId}": {
+      "schema": "GeneratedPlan",
+      "description": "User fitness plans"
+    }
+  }
+}

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LifeLens AI — Predict Your Health Future</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            syne: ['Syne', 'sans-serif'],
+            sans: ['DM Sans', 'sans-serif'],
+          },
+          colors: {
+            ll: {
+              bg: 'var(--bg)',
+              surface: 'var(--surface)',
+              surface2: 'var(--surface2)',
+              text: 'var(--text)',
+              'text-muted': 'var(--text-muted)',
+              'text-dim': 'var(--text-dim)',
+              accent: 'var(--accent)',
+              accent2: 'var(--accent2)',
+              accent3: 'var(--accent3)',
+              danger: 'var(--danger)',
+              warn: 'var(--warn)',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    @import "tailwindcss";
+    
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface2: #f1f5f9;
+      --border: rgba(0,0,0,0.08);
+      --border-bright: rgba(0,212,255,0.2);
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      --accent: #00d4ff;
+      --accent2: #7b5cf0;
+      --accent3: #00ff9d;
+      --danger: #ff4d6d;
+      --warn: #ffb347;
+      --grid-opacity: 0.05;
+      --glass-bg: rgba(255, 255, 255, 0.7);
+    }
+
+    .dark {
+      --bg: #080c14;
+      --surface: #0d1420;
+      --surface2: #111927;
+      --border: rgba(255,255,255,0.06);
+      --border-bright: rgba(99,210,255,0.2);
+      --text: #e8f4ff;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --accent: #00d4ff;
+      --accent2: #7b5cf0;
+      --accent3: #00ff9d;
+      --danger: #ff4d6d;
+      --warn: #ffb347;
+      --grid-opacity: 0.03;
+      --glass-bg: rgba(13, 20, 32, 0.7);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* BACKGROUND GRID */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(0,212,255,var(--grid-opacity)) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,var(--grid-opacity)) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+    }
+
+    .glass-bright {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-bright);
+    }
+
+    .shimmer {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shimmer::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.05) 45%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.05) 55%,
+        transparent 100%
+      );
+      transform: rotate(30deg);
+      animation: shimmer 6s infinite linear;
+      pointer-events: none;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) rotate(30deg); }
+      100% { transform: translateX(100%) rotate(30deg); }
+    }
+
+    .text-gradient-cyan {
+      background: linear-gradient(to right, var(--accent), var(--accent3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .text-gradient-purple {
+      background: linear-gradient(to right, var(--accent2), #ff00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .bento-card {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .bento-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      border-color: var(--accent);
+    }
+    
+    /* Markdown Styling */
+    .prose h1, .prose h2, .prose h3 { color: var(--text); font-family: 'Syne', sans-serif; font-weight: 800; margin-top: 1.5rem; margin-bottom: 0.75rem; }
+    .prose h1 { font-size: 1.5rem; }
+    .prose h2 { font-size: 1.25rem; }
+    .prose h3 { font-size: 1.125rem; }
+    .prose p { margin-bottom: 1rem; line-height: 1.6; }
+    .prose ul, .prose ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+    .prose li { margin-bottom: 0.5rem; }
+    .prose ul { list-style-type: disc; }
+    .prose ol { list-style-type: decimal; }
+    .prose strong { color: var(--accent); font-weight: 700; }
+    .prose code { background: var(--surface2); padding: 0.2rem 0.4rem; border-radius: 0.4rem; font-family: monospace; font-size: 0.9em; }
+    
+    .glow-cyan { text-shadow: 0 0 20px rgba(0,212,255,0.6); }
+    .glow-green { text-shadow: 0 0 20px rgba(0,255,157,0.6); }
+    .glow-red { text-shadow: 0 0 20px rgba(255,77,109,0.6); }
+
+    /* Custom scrollbar for theme */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-dim);
+    }
+  </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "recharts": "https://aistudiocdn.com/recharts@^3.5.0"
+  }
+}
+</script>
+</head>
+  <body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 antialiased transition-colors duration-200">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

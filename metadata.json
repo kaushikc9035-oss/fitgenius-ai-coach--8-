@@ -1,0 +1,5 @@
+{
+  "name": "FitGenius AI Coach",
+  "description": "A personalized diet and fitness coach powered by Gemini AI that generates custom plans based on user biometrics and goals.",
+  "requestFramePermissions": []
+}
